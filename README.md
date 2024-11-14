@@ -25,6 +25,8 @@ Staff
 
 ---
 
+![Logo](sekawan.drawio.png) 
+
 ## PENTING!!!
 
 Pastikan Anda sudah menginstal:
