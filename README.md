@@ -9,7 +9,7 @@
 
 ## About Project
 
-Deskripsi singkat mengenai project Laravel dan fitur autentikasi Breeze yang disertakan.
+Membuat aplikasi web untuk manajemen reservasi dan monitoring kendaraan yang memungkinkan perusahaan mengelola pemakaian kendaraan dengan efisien, melacak aktivitas kendaraan, dan mendapatkan data performa operasional kendaraan secara keseluruhan.
 
 ---
 
