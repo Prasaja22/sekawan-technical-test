@@ -31,4 +31,3 @@ install:
 
 ```bash
 composer install
-\```
