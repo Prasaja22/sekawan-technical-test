@@ -25,7 +25,7 @@ Staff
 
 ---
 
-## Prasyarat
+## PENTING!!!
 
 Pastikan Anda sudah menginstal:
 - [PHP](https://www.php.net/downloads.php) versi 8.1 atau lebih baru
