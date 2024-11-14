@@ -25,6 +25,8 @@ Staff
 
 ---
 
+Activity Diagram
+
 ![Logo](sekawan.drawio.png) 
 
 ## PENTING!!!
