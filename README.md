@@ -15,6 +15,14 @@ Admin
 - Email : admin@gmail.com
 - Password : password123
 
+Driver
+- Email : budiono@gmail.com
+- Password : password123
+
+Staff
+- Email : joko@gmail.com
+- Password : password123
+
 ---
 
 ## Prasyarat
