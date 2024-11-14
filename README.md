@@ -11,82 +11,25 @@
 
 Berikut adalah langkah-langkah untuk melakukan setup project Laravel yang diambil dari repository GitHub:
 
-Langkah 1: Clone Repository dari GitHub
-Buka terminal atau Command Prompt.
+ # Project Name
 
-Clone repository Laravel ke direktori lokal Anda:
+Deskripsi singkat mengenai project Laravel ini dan fungsinya.
 
-bash
-Salin kode
-git clone <URL-repository-GitHub>
-Gantilah <URL-repository-GitHub> dengan URL dari repository GitHub proyek Laravel yang ingin Anda clone.
+## Prasyarat
 
-Pindah ke direktori project:
+Pastikan Anda telah menginstal:
+- [PHP](https://www.php.net/downloads.php) versi 8.0 atau lebih baru
+- [Composer](https://getcomposer.org/download/)
+- [Node.js dan npm](https://nodejs.org/en/download/) (untuk pengelolaan asset front-end)
+- Database MySQL atau MariaDB
 
-bash
-Salin kode
-cd nama-folder-project
-Langkah 2: Install Dependensi Composer
-Pastikan Anda berada di dalam direktori proyek Laravel.
+## Setup Project
 
-Jalankan perintah berikut untuk menginstal semua dependensi yang diperlukan:
+Ikuti langkah-langkah berikut untuk mengunduh dan menjalankan project ini di mesin lokal Anda.
 
-bash
-Salin kode
-composer install
-Catatan: Jika composer belum diinstal, silakan unduh dan instal dari getcomposer.org.
+### 1. Clone Repository
+Clone repository project dari GitHub:
+```bash
+git clone https://github.com/username/project-name.git
 
-Langkah 3: Buat File Environment .env
-Buat file .env dengan menduplikasi file .env.example:
-bash
-Salin kode
-cp .env.example .env
-Buka file .env dan sesuaikan konfigurasi, terutama bagian DB_DATABASE, DB_USERNAME, dan DB_PASSWORD untuk konfigurasi database.
-Langkah 4: Generate Application Key
-Generate application key yang dibutuhkan oleh Laravel:
-bash
-Salin kode
-php artisan key:generate
-Ini akan menghasilkan kunci aplikasi baru di file .env.
-Langkah 5: Migrasi Database
-Pastikan database yang sudah disesuaikan di .env sudah dibuat di MySQL atau database lain yang Anda gunakan.
-
-Jalankan migrasi untuk membuat tabel-tabel yang diperlukan:
-
-bash
-Salin kode
-php artisan migrate
-Catatan: Jika ada data awal (seeder), Anda bisa menjalankan seeder dengan perintah berikut:
-
-bash
-Salin kode
-php artisan db:seed
-Langkah 6: Install Dependensi Frontend (Optional)
-Jika project Laravel menggunakan frontend seperti Vue.js, React, atau menggunakan Laravel Mix, Anda perlu menginstal dependensi JavaScript:
-
-Pastikan Anda berada di dalam direktori project.
-
-Jalankan perintah berikut untuk menginstal dependensi Node.js:
-
-bash
-Salin kode
-npm install
-Setelah itu, compile asset frontend dengan menjalankan:
-
-bash
-Salin kode
-npm run dev
-atau untuk mode produksi:
-
-bash
-Salin kode
-npm run prod
-Catatan: Jika npm belum diinstal, instal terlebih dahulu Node.js yang sudah menyertakan npm di dalamnya dari nodejs.org.
-
-Langkah 7: Jalankan Server Laravel
-Jalankan server development Laravel dengan perintah berikut:
-bash
-Salin kode
-php artisan serve
-Buka browser dan akses aplikasi Anda di http://localhost:8000.
 
