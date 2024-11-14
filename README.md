@@ -29,6 +29,110 @@ Activity Diagram
 
 ![Logo](sekawan.drawio.png) 
 
+## Fitur Utama
+- Pemesanan kendaraan oleh Admin.
+- Penyetujuan pemesanan oleh Penyetuju.
+- Pemakaian kendaraan oleh Driver.
+- Riwayat pemakaian kendaraan.
+- Servis kendaraan.
+- Laporan status kendaraan.
+
+## Skema Database
+
+Berikut adalah skema database yang digunakan dalam sistem ini:
+
+### 1. Tabel: `users`
+Menyimpan data pengguna dalam sistem.
+
+| Kolom               | Tipe Data      | Deskripsi                   |
+|---------------------|----------------|-----------------------------|
+| `id`                | `BIGINT`       | ID pengguna (Primary Key)    |
+| `name`              | `VARCHAR(255)`  | Nama pengguna               |
+| `email`             | `VARCHAR(255)`  | Email pengguna              |
+| `password`          | `VARCHAR(255)`  | Password pengguna           |
+| `role`              | `VARCHAR(50)`   | Peran pengguna (admin, user, penyetuju) |
+| `email_verified_at` | `TIMESTAMP`     | Waktu verifikasi email      |
+| `created_at`        | `TIMESTAMP`     | Tanggal pembuatan pengguna  |
+| `updated_at`        | `TIMESTAMP`     | Tanggal pembaruan pengguna  |
+
+### 2. Tabel: `kendaraan`
+Menyimpan data kendaraan yang ada dalam sistem.
+
+| Kolom               | Tipe Data      | Deskripsi                   |
+|---------------------|----------------|-----------------------------|
+| `id`                | `UUID`         | ID kendaraan (Primary Key)   |
+| `nomor_polisi`      | `VARCHAR(15)`   | Nomor polisi kendaraan (Unique) |
+| `merk`              | `VARCHAR(100)`  | Merk kendaraan               |
+| `model`             | `VARCHAR(100)`  | Model kendaraan              |
+| `tahun_produksi`    | `INTEGER`       | Tahun produksi kendaraan     |
+| `jenis`             | `VARCHAR(50)`   | Jenis kendaraan (pribadi, angkutan) |
+| `kapasitas_tangki`  | `INTEGER`       | Kapasitas tangki kendaraan   |
+| `jarak_tempuh_total`| `INTEGER`       | Total jarak tempuh kendaraan |
+| `status`            | `VARCHAR(50)`   | Status kendaraan (available, in use, maintenance) |
+| `created_at`        | `TIMESTAMP`     | Tanggal pembuatan kendaraan  |
+| `updated_at`        | `TIMESTAMP`     | Tanggal pembaruan kendaraan  |
+
+### 3. Tabel: `pemakaian_harian`
+Menyimpan data pemakaian kendaraan setiap hari.
+
+| Kolom                     | Tipe Data      | Deskripsi                    |
+|---------------------------|----------------|------------------------------|
+| `id`                      | `UUID`         | ID pemakaian (Primary Key)    |
+| `tanggal`                 | `DATE`         | Tanggal pemakaian kendaraan   |
+| `kendaraan_id`            | `UUID`         | Foreign Key ke `kendaraan.id` |
+| `jarak_tempuh_harian`     | `INTEGER`      | Jarak tempuh kendaraan hari itu |
+| `bahan_bakar_digunakan`   | `INTEGER`      | Jumlah bahan bakar yang digunakan (liter) |
+| `driver_id`               | `BIGINT`       | Foreign Key ke `users.id` (Driver) |
+| `created_at`              | `TIMESTAMP`    | Tanggal pembuatan pemakaian  |
+| `updated_at`              | `TIMESTAMP`    | Tanggal pembaruan pemakaian  |
+
+### 4. Tabel: `servis_kendaraan`
+Menyimpan data servis kendaraan.
+
+| Kolom               | Tipe Data    | Deskripsi                   |
+|---------------------|--------------|-----------------------------|
+| `id`                | `UUID`       | ID servis (Primary Key)      |
+| `kendaraan_id`      | `UUID`       | Foreign Key ke `kendaraan.id`|
+| `tanggal_servis`    | `DATE`       | Tanggal servis kendaraan     |
+| `jenis_servis`      | `VARCHAR(100)`| Jenis servis                 |
+| `biaya_servis`      | `TEXT`       | Biaya servis                 |
+| `keterangan`        | `TEXT`       | Keterangan servis            |
+| `created_at`        | `TIMESTAMP`  | Tanggal pembuatan servis     |
+| `updated_at`        | `TIMESTAMP`  | Tanggal pembaruan servis     |
+
+### 5. Tabel: `riwayat_pemakaian`
+Menyimpan riwayat pemakaian kendaraan.
+
+| Kolom               | Tipe Data    | Deskripsi                   |
+|---------------------|--------------|-----------------------------|
+| `id`                | `UUID`       | ID riwayat pemakaian (Primary Key) |
+| `kendaraan_id`      | `UUID`       | Foreign Key ke `kendaraan.id` |
+| `tanggal_mulai`     | `DATE`       | Tanggal mulai pemakaian     |
+| `tanggal_selesai`   | `DATE`       | Tanggal selesai pemakaian   |
+| `keperluan`         | `VARCHAR(255)`| Keperluan pemakaian kendaraan |
+| `lokasi_asal`       | `VARCHAR(255)`| Lokasi asal kendaraan        |
+| `lokasi_tujuan`     | `VARCHAR(255)`| Lokasi tujuan kendaraan      |
+| `jarak_tempuh`      | `INTEGER`    | Jarak tempuh kendaraan (km)  |
+| `driver_id`         | `BIGINT`     | Foreign Key ke `users.id` (Driver) |
+| `status`            | `VARCHAR(50)`| Status (pending, approved, rejected) |
+| `created_at`        | `TIMESTAMP`  | Tanggal pembuatan riwayat    |
+| `updated_at`        | `TIMESTAMP`  | Tanggal pembaruan riwayat    |
+
+### 6. Tabel: `booking`
+Menyimpan data pemesanan kendaraan.
+
+| Kolom               | Tipe Data    | Deskripsi                   |
+|---------------------|--------------|-----------------------------|
+| `id`                | `UUID`       | ID pemesanan (Primary Key)   |
+| `kendaraan_id`      | `UUID`       | Foreign Key ke `kendaraan.id`|
+| `driver_id`         | `BIGINT`     | Foreign Key ke `users.id` (Driver) |
+| `approved_by`       | `BIGINT`     | Foreign Key ke `users.id` (Penyetuju) |
+| `tanggal_pemesanan` | `DATE`       | Tanggal pemesanan            |
+| `keterangan`        | `TEXT`       | Keterangan pemesanan         |
+| `status`            | `ENUM('pending', 'approved', 'rejected', 'done')` | Status pemesanan (pending, approved, rejected, done) |
+| `created_at`        | `TIMESTAMP`  | Tanggal pembuatan pemesanan  |
+| `updated_at`        | `TIMESTAMP`  | Tanggal pembaruan pemesanan  |
+
 ## PENTING!!!
 
 Pastikan Anda sudah menginstal:
