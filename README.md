@@ -31,3 +31,14 @@ install:
 
 ```bash
 composer install
+```
+
+### 1. Install Dependencies 
+
+install:
+
+```bash
+composer install
+```
+
+
