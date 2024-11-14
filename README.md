@@ -29,5 +29,6 @@ Ikuti langkah-langkah berikut untuk menginstal dan menjalankan project ini di li
 
 install:
 
-```bash
+\```bash
 composer install
+\```
