@@ -33,12 +33,52 @@ install:
 composer install
 ```
 
-### 1. Install Dependencies 
-
-install:
+### 3. Salin File Konfigurasi
+Salin file .env.example dan ubah namanya menjadi .env:
 
 ```bash
-composer install
+cp .env.example .env 
 ```
 
+### 4. Generate Application Key
+Jalankan perintah berikut untuk menghasilkan APP_KEY:
+
+```bash
+php artisan key:generate
+```
+
+### 5. Konfigurasi Database
+Buka file .env dan perbarui konfigurasi database Anda: 
+
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nama_database
+DB_USERNAME=username_database
+DB_PASSWORD=password_database
+```
+
+### 6. Jalankan Migrasi dan Seeder
+Jalankan migrasi database untuk membuat tabel-tabel yang diperlukan:
+
+```bash
+php artisan migrate
+```
+```bash
+php artisan db:seed
+```
+
+### 7. Install Laravel Breeze
+Jalankan perintah berikut:
+```bash
+composer require laravel/breeze --dev
+php artisan breeze:install
+```
+
+### 9. Menjalankan Server Lokal
+Untuk menjalankan aplikasi, jalankan perintah berikut:
+```bash
+php artisan serve
+```
 
