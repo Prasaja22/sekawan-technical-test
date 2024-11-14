@@ -11,6 +11,10 @@
 
 Membuat aplikasi web untuk manajemen reservasi dan monitoring kendaraan yang memungkinkan perusahaan mengelola pemakaian kendaraan dengan efisien, melacak aktivitas kendaraan, dan mendapatkan data performa operasional kendaraan secara keseluruhan.
 
+Admin 
+Email : admin@gmail.com
+Password : password123
+
 ---
 
 ## Prasyarat
