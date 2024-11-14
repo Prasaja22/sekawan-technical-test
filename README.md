@@ -5,9 +5,79 @@ Deskripsi singkat mengenai project Laravel dan fitur autentikasi Breeze yang dis
 Prasyarat
 Pastikan Anda sudah menginstal:
 
-PHP versi 8.0 atau lebih baru
+PHP versi 8.1 atau lebih baru
 Composer
 Node.js dan npm
 Database MySQL atau MariaDB
 Setup Project
 Ikuti langkah-langkah berikut untuk menginstal dan menjalankan project ini di lingkungan lokal Anda.
+
+2. Install Dependencies
+Instal dependensi backend menggunakan Composer:
+
+bash
+Salin kode
+composer install
+Lalu, instal dependensi frontend menggunakan npm:
+
+bash
+Salin kode
+npm install
+3. Konfigurasi Environment
+Buat file .env dengan menyalin .env.example dan mengatur konfigurasi sesuai dengan environment Anda:
+
+bash
+Salin kode
+cp .env.example .env
+Setelah itu, buat APP_KEY:
+
+bash
+Salin kode
+php artisan key:generate
+4. Setup Database
+Edit konfigurasi database di .env:
+
+plaintext
+Salin kode
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nama_database
+DB_USERNAME=username
+DB_PASSWORD=password
+Setelah itu, jalankan migrasi untuk membuat tabel-tabel di database:
+
+bash
+Salin kode
+php artisan migrate
+5. Instal Laravel Breeze
+Instal Laravel Breeze untuk autentikasi:
+
+bash
+Salin kode
+composer require laravel/breeze --dev
+php artisan breeze:install
+Setelah diinstal, lakukan kompilasi asset front-end:
+
+bash
+Salin kode
+npm run dev
+Atau untuk versi production:
+
+bash
+Salin kode
+npm run build
+6. Jalankan Server
+Jalankan server pengembangan Laravel:
+
+bash
+Salin kode
+php artisan serve
+Akses aplikasi di http://localhost:8000.
+
+7. (Opsional) Seed Data
+Jika project ini memiliki seeder untuk data awal, Anda bisa menjalankannya dengan perintah berikut:
+
+bash
+Salin kode
+php artisan db:seed
