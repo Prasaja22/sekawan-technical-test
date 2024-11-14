@@ -16,7 +16,7 @@ Deskripsi singkat mengenai project Laravel dan fitur autentikasi Breeze yang dis
 ## Prasyarat
 
 Pastikan Anda sudah menginstal:
-- [PHP](https://www.php.net/downloads.php) versi 8.0 atau lebih baru
+- [PHP](https://www.php.net/downloads.php) versi 8.1 atau lebih baru
 - [Composer](https://getcomposer.org/download/)
 - [Node.js dan npm](https://nodejs.org/en/download/)
 - Database MySQL atau MariaDB
@@ -25,10 +25,9 @@ Pastikan Anda sudah menginstal:
 
 Ikuti langkah-langkah berikut untuk menginstal dan menjalankan project ini di lingkungan lokal Anda.
 
-### 1. Clone Repository
+### 1. Install Dependencies 
 
-Clone project dari GitHub:
+install:
 
 ```bash
-git clone https://github.com/username/project-name.git
-cd project-name
+composer install
