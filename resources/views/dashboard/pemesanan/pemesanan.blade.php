@@ -9,6 +9,7 @@
         <div>
           <h3 class="fw-bold mb-3">Entry Data Persetujuan</h3>
         </div>
+        @if (Auth::user()->role == 'admin')
         <div class="ms-md-auto py-2 py-md-0">
             <button type="button" class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Tambah Data
@@ -77,6 +78,8 @@
             </div>
             </div>
         </div>
+        @endif
+
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -120,7 +123,7 @@
                       </tr>
                     </tfoot>
                     <tbody>
-                        @forelse ($data as $item)
+                        @forelse ( Auth::user()->role == 'user' ? $dataUser : $data as $item)
                         <tr>
                           <td>{{$item->id}}</td>
                           <td>{{$item->kendaraan->merk}} : {{$item->kendaraan->nomor_polisi}}</td>
@@ -130,6 +133,7 @@
                           <td>{{$item->keterangan}}</td>
                           <td>{{$item->status}}</td>
                           <td>
+                            @if (Auth::user()->role == 'staff' || Auth::user()->role == 'admin')
                             <button type="button" class="btn btn-warning btn-sm  btn-round" data-bs-toggle="modal" data-bs-target="#staticBackdropEdit{{$item->id}}">
                                 Edit
                             </button>
@@ -195,6 +199,8 @@
                                 </div>
                                 </div>
                             </div>
+
+                            @endif
 
                             @if ( Auth::user()->role == 'admin')
                             <button type="button" class="btn btn-danger btn-sm  btn-round" data-bs-toggle="modal" data-bs-target="#staticBackdropHapus{{$item->id}}">

@@ -43,4 +43,9 @@ class KendaraanModel extends Model
     {
         return $this->hasMany(BookingModel::class, 'kendaraan_id');
     }
+
+    public function getNamaKendaraanAttribute()
+    {
+        return "{$this->merk} - {$this->nomor_polisi}";
+    }
 }

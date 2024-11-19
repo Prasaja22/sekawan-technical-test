@@ -7,11 +7,11 @@
         class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
       >
         <div>
-          <h3 class="fw-bold mb-3">Entry Data Pemesanan</h3>
+          <h3 class="fw-bold mb-3">Booking Kendaraan</h3>
         </div>
         <div class="ms-md-auto py-2 py-md-0">
             <button type="button" class="btn btn-primary btn-round" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Tambah Data
+                Booking
             </button>
         </div>
 
@@ -20,7 +20,7 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Kendaraan</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Booking</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -35,33 +35,48 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="merk">Merk</label>
                             <label for="driver_id">Pilih Driver</label>
-                            <select name="driver_id" class="form-control" required>
+                            <select name="driver_id" class="form-control" required {{ Auth::user()->role == 'user' ? 'readonly' : '' }}>
+                                @if (Auth::user()->role == 'admin')
                                 @foreach ($drivers as $driver)
                                     <option value="{{ $driver->id }}">{{ $driver->name }}</option>
                                 @endforeach
+                                @else
+                                @foreach ($drivers as $driver)
+                                 <option value="{{ $driver->id }}" {{ $driver->name == 'Driver Belum Ditentukan' ? 'selected' : ''}}>{{ $driver->name }}</option>
+                                @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="approved_by">Pihak yang Menyetujui</label>
-                            <select name="approved_by" class="form-control">
-                                <option value="" disabled>-- Pilih Admin --</option>
+                            <select name="approved_by" class="form-control" {{ Auth::user()->role == 'user' ? 'readonly' : '' }}>
+                                <option value="" disabled>-- Atasan Penyetuju --</option>
+                                @if (Auth::user()->role == 'admin')
                                 @foreach ($approvers as $approver)
                                     <option value="{{ $approver->id }}">{{ $approver->name }}</option>
                                 @endforeach
+                                @else
+                                @foreach ($approvers as $approver)
+                                <option value="{{ $approver->id }}" {{ $approver->name == 'Staff Penyetuju' ? 'selected' : '' }}>{{ $approver->name }}</option>
+                                @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_pemesanan">Tanggal Pemesanan</label>
                             <input type="date" name="tanggal_pemesanan" class="form-control" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" {{ Auth::user()->role == 'user' ?  'hidden' : '' }}>
                             <label for="status">Status</label>
-                            <select name="status" class="form-control" required>
+                            <select name="status" class="form-control" required {{ Auth::user()->role == 'user' ? 'readonly' : '' }}>
+                                @if (Auth::user()->role == 'admin')
                                 <option value="pending">Pending</option>
                                 <option value="approved">Approved</option>
                                 <option value="rejected">Rejected</option>
+                                @else
+                                <option value="pending">Pending</option>
+                                @endif
                             </select>
                         </div>
                         <div class="form-group">
@@ -87,7 +102,7 @@
         <div class="col-md-12">
           <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Data Entry Booking</h4>
+                <h4 class="card-title">Data Booking Kendaraan</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -120,7 +135,7 @@
                       </tr>
                     </tfoot>
                     <tbody>
-                        @forelse ($data as $item)
+                        @forelse (  Auth::user()->role == 'user' ?  $dataUser : $data as $item)
                         <tr>
                           <td>{{$item->id}}</td>
                           <td>{{$item->kendaraan->merk}} : {{$item->kendaraan->nomor_polisi}}</td>
@@ -130,14 +145,14 @@
                           <td>{{$item->keterangan}}</td>
                           <td>{{$item->status}}</td>
                           <td>
-                            <button type="button" class="btn btn-warning btn-sm  btn-round" data-bs-toggle="modal" data-bs-target="#staticBackdropEdit{{$item->id}}">
-                                Edit
+                            <button type="button" class="btn btn-secondary btn-sm  btn-round mb-1" data-bs-toggle="modal" data-bs-target="#staticBackdropEdit{{$item->id}}">
+                                {{ Auth::user()->role == 'user' ? 'Edit' :  'Update' }}
                             </button>
                             <div class="modal fade" id="staticBackdropEdit{{$item->id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropEditLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Kendaraan</h1>
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Booking</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -152,8 +167,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="merk">Merk</label>
+                                            <div class="form-group" {{  Auth::user()->role == 'user' ? 'hidden' :  '' }}>
                                                 <label for="driver_id">Pilih Driver</label>
                                                 <select name="driver_id" class="form-control" required>
                                                     @foreach ($drivers as $driver)
@@ -161,10 +175,10 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" {{  Auth::user()->role == 'user' ? 'hidden' :  '' }}>
                                                 <label for="approved_by">Pihak yang Menyetujui</label>
                                                 <select name="approved_by" class="form-control">
-                                                    <option value="" disabled>-- Pilih Admin --</option>
+                                                    <option value="" disabled>-- Pilih Penyetuju --</option>
                                                     @foreach ($approvers as $approver)
                                                         <option value="{{ $approver->id }}" {{$approver->id == $item->approvedBy->id ? 'selected' : ''}}>{{ $approver->name }}</option>
                                                     @endforeach
@@ -174,7 +188,7 @@
                                                 <label for="tanggal_pemesanan">Tanggal Pemesanan</label>
                                                 <input type="date" name="tanggal_pemesanan" class="form-control" required value="{{$item->tanggal_pemesanan}}">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" hidden>
                                                 <label for="status">Status</label>
                                                 <select name="status" class="form-control" required>
                                                     <option value="pending"  {{$item->status == "pending" ? 'selected' : ''}}>Pending</option>

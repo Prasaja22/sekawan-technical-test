@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
     // Di web.php jika ingin API dapat diakses melalui route biasa
     Route::get('/booking-stats', [HomeController::class, 'getBookingSparklineData']);
 
+    Route::get('/getchart', [HomeController::class, 'getChartData']);
+    Route::get('/export-pemesanan',  [HomeController::class, 'exportLaporan']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

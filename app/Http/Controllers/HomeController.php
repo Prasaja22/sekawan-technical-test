@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PemesananExport;
 use App\Models\BookingModel;
+use App\Models\RiwayatModel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -12,33 +15,38 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        // Pass data ke view
         return view('dashboard.home.home');
     }
 
   // HomeController.php
-    public function getBookingSparklineData()
+    public function getChartData()
     {
-        $data = BookingModel::with('kendaraan')
-            ->selectRaw('kendaraan_id, status, COUNT(*) as count')
-            ->groupBy('kendaraan_id', 'status')
-            ->get()
-            ->groupBy('kendaraan.nama'); // Asumsikan 'nama' adalah atribut pada relasi kendaraan
-
-        $result = [];
-
-        foreach ($data as $kendaraan => $statuses) {
-            $result[$kendaraan] = [
-                'approved' => $statuses->where('status', 'approved')->sum('count'),
-                'pending' => $statuses->where('status', 'pending')->sum('count'),
-                'rejected' => $statuses->where('status', 'rejected')->sum('count')
+        $data = RiwayatModel::with('kendaraan') // Load kendaraan relationship
+        ->selectRaw('kendaraan_id, COUNT(id) as total_pemakaian')
+        ->groupBy('kendaraan_id')
+        ->get()
+        ->map(function ($item) {
+            return [
+                'kendaraan' => $item->kendaraan->nama_kendaraan, // Use the accessor
+                'total_pemakaian' => $item->total_pemakaian,
             ];
-        }
+        });
 
-        return response()->json($result);
+        $labels = $data->pluck('kendaraan');
+        $values = $data->pluck('total_pemakaian');
+
+        return response()->json([
+            'labels' => $labels,
+            'data' => $values
+        ]);
     }
 
+    public function exportLaporan(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
+        return Excel::download(new PemesananExport($startDate, $endDate), 'laporan_pemesanan.xlsx');
+    }
 
 }

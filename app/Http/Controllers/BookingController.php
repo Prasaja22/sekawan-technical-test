@@ -6,6 +6,7 @@ use App\Models\BookingModel;
 use App\Models\KendaraanModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Cast\Bool_;
 
 class BookingController extends Controller
@@ -21,7 +22,12 @@ class BookingController extends Controller
 
         $data = BookingModel::with(['kendaraan', 'driver', 'approvedBy'])->get();
 
-        return view('dashboard.entry.entry', compact('drivers', 'approvers', 'kendaraans', 'data'));
+        $dataUser = BookingModel::with(['kendaraan', 'driver', 'approvedBy'])
+        ->where('booked_by', Auth::user()->id)
+        ->get();
+
+
+        return view('dashboard.entry.entry', compact('drivers', 'approvers', 'kendaraans', 'data', 'dataUser'));
     }
 
     /**
@@ -43,6 +49,7 @@ class BookingController extends Controller
                 'kendaraan_id' => $request->input('kendaraan_id'),
                 'driver_id' => $request->input('driver_id'),
                 'approved_by' => $request->input('approved_by'),
+                'booked_by' => Auth::user()->id,
                 'tanggal_pemesanan' => $request->input('tanggal_pemesanan'),
                 'keterangan' => $request->input('keterangan'),
                 'status' => $request->input('status'),

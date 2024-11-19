@@ -16,6 +16,7 @@ class BookingModel extends Model
         'kendaraan_id',
         'driver_id',
         'approved_by',
+        'booked_by',
         'tanggal_pemesanan',
         'keterangan',
         'status'
@@ -31,5 +32,9 @@ class BookingModel extends Model
 
     public function approvedBy() {
         return $this->belongsTo(User::class, 'approved_by');
+    }
+
+    public function bookedBy() {
+        return $this->belongsTo(User::class, 'booked_by');
     }
 }

@@ -6,6 +6,7 @@ use App\Models\BookingModel;
 use App\Models\KendaraanModel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PemesananController extends Controller
 {
@@ -17,7 +18,11 @@ class PemesananController extends Controller
 
         $data = BookingModel::with(['kendaraan', 'driver', 'approvedBy'])->get();
 
-        return view('dashboard.pemesanan.pemesanan', compact('data', 'kendaraans', 'approvers', 'drivers'));
+        $dataUser = BookingModel::with(['kendaraan', 'driver', 'approvedBy'])
+        ->where('status', 'approved')->where('booked_by', Auth::user()->id)
+        ->get();
+
+        return view('dashboard.pemesanan.pemesanan', compact('data', 'kendaraans', 'approvers', 'drivers', 'dataUser'));
     }
 
     public function update(Request $request, string $id){

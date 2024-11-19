@@ -6,6 +6,7 @@
       <div
         class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
       >
+      @if (Auth::user()->role == 'admin')
         <div>
           <h3 class="fw-bold mb-3">Entry Data Penggunaan Kendaraan</h3>
         </div>
@@ -77,6 +78,8 @@
             </div>
             </div>
         </div>
+
+        @endif
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -87,7 +90,7 @@
         <div class="col-md-12">
           <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Data Kendaraan Aktif</h4>
+                <h4 class="card-title">Data Booking Aktif</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -302,10 +305,8 @@
                                             </div>
                                              <div class="form-group">
                                                  <label for="nomor_polisi">Kendaraan</label>
-                                                 <select name="kendaraan_id" class="form-control" required @readonly(true)>
-                                                     @foreach ($kendaraans as $kendaraan)
-                                                         <option value="{{ $kendaraan->id }}" {{$kendaraan->id == $item->kendaraan->id ? 'selected' : '' }}>{{ $kendaraan->jenis }} {{ $kendaraan->merk }} - {{ $kendaraan->nomor_polisi }}</option>
-                                                     @endforeach
+                                                 <select name="kendaraan_id" id="kendaraan_id" class="form-control" @readonly(true)>
+                                                    <option value="{{$item->kendaraan->id}}">{{$item->kendaraan->jenis}} {{$item->kendaraan->merk}} : {{$item->kendaraan->nomor_polisi}}</option>
                                                  </select>
                                              </div>
                                              <div class="form-group">

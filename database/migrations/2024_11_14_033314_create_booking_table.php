@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('kendaraan_id')->constrained('kendaraan')->onDelete('cascade');
             $table->foreignId('driver_id')->nullable()->constrained('users')->onDelete('set null'); // Relasi ke driver
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null'); // Pihak yang menyetujui
+            $table->foreignId('booked_by')->nullable()->constrained('users')->onDelete('set null');
             $table->date('tanggal_pemesanan');
             $table->text('keterangan')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected', 'done'])->default('pending');

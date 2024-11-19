@@ -53,11 +53,48 @@ class UserSeeder extends Seeder
 
         // Staff user
         User::create([
-            'name' => 'Staff User',
+            'name' => 'Amin Rahman',
+            'email' => 'rahman@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password123'),
+            'role' => 'staff',
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'Staff Penyetuju',
             'email' => 'staff@gmail.com',
             'email_verified_at' => now(),
             'password' => Hash::make('password123'),
             'role' => 'staff',
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'Driver Belum Ditentukan',
+            'email' => 'driver@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password123'),
+            'role' => 'driver',
+            'remember_token' => Str::random(10),
+        ]);
+
+
+        User::create([
+            'name' => 'Mulyono',
+            'email' => 'mulyono@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password123'),
+            'role' => 'user',
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::create([
+            'name' => 'Gibran',
+            'email' => 'gibran@gmail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('password123'),
+            'role' => 'user',
             'remember_token' => Str::random(10),
         ]);
 
